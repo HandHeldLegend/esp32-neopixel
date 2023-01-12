@@ -178,6 +178,18 @@ esp_err_t neopixel_init(rgb_s *led_colors, spi_host_device_t spi_device)
     //#if CONFIG_NP_RGB_ENABLE
     esp_err_t err; 
 
+    if (neopixel_status == NEOPIXEL_STATUS_AVAILABLE)
+    {
+        ESP_LOGE(TAG, "Already initialized.");
+        return ESP_FAIL;
+    }
+
+    if ((spi_device != SPI2_HOST) && (spi_device != SPI3_HOST))
+    {
+        ESP_LOGE(TAG, "Must use SPI2 or SPI3");
+        return ESP_FAIL;
+    }
+
     // Set up SPI for rgb
     
     // Configuration for the SPI bus
@@ -216,7 +228,15 @@ esp_err_t neopixel_init(rgb_s *led_colors, spi_host_device_t spi_device)
 
     // Have to invert because some dumb reason on ESP32-S3 I don't understand : )
     #if CONFIG_IDF_TARGET_ESP32S3
-        gpio_matrix_out(CONFIG_NP_RGB_GPIO, FSPID_OUT_IDX, true, false);
+        if (spi_device == SPI2_HOST)
+        {
+            gpio_matrix_out(CONFIG_NP_RGB_GPIO, FSPID_OUT_IDX, true, false);
+        }   
+        else if (spi_device == SPI3_HOST)
+        {
+            gpio_matrix_out(CONFIG_NP_RGB_GPIO, SPI3_D_OUT_IDX, true, false);
+        }
+
     #endif
 
     ESP_LOGI(TAG, "Started RGB Service OK.");

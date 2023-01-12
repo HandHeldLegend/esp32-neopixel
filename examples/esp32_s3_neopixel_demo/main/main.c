@@ -2,12 +2,12 @@
 
 #include "esp32_neopixel.h"
 
-#define RGB_SPIDEV SPI2_HOST
+#define RGB_SPIDEV SPI3_HOST
 
 rgb_s led_colors[CONFIG_NP_RGB_COUNT] = {0};
 
 #define TIMESTAMP 20
-#define MAXBRIGHT 100
+#define MAXBRIGHT 200
 
 uint8_t bright = MAXBRIGHT;
 uint8_t flip = 0;
