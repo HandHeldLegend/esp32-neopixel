@@ -120,6 +120,7 @@ void app_main(void)
         fade_in();
         fade_out();
         rgb_setall(COLOR_BLACK);
+        last_color.rgb = COLOR_BLACK.rgb;
         rgb_setbrightness(MAXBRIGHT);
         fade_to(COLOR_RED);
         fade_to(COLOR_BLACK);
