@@ -14,7 +14,10 @@
         "esp32_neopixel.h": "c",
         "rgb_defines.h": "c",
         "esp_log.h": "c",
-        "rgb_colors.h": "c"
+        "rgb_colors.h": "c",
+        "ratio": "c",
+        "chrono": "c",
+        "complex": "c"
     },
     "idf.flashType": "UART"
 }

@@ -42,7 +42,7 @@ void rgb_setbrightness(uint8_t brightness);
 void rgb_setall(rgb_s color);
 
 // Blends together two rgb_s colors and returns the blended color.
-rgb_s rgb_blend(rgb_s color1, rgb_s color2, uint8_t blend_amount);
+void rgb_blend(rgb_s *color_out, rgb_s color1, rgb_s color2, uint8_t blend_amount);
 
 // Update the RGB leds with the current set colors.
 void rgb_show(void);

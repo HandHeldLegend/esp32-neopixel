@@ -332,24 +332,20 @@ void rgb_setbrightness(uint8_t brightness)
     _rgb_brightness = brightness;
 }
 
-rgb_s rgb_blend(rgb_s color1, rgb_s color2, uint8_t blend_amount)
+void rgb_blend(rgb_s *color_out, rgb_s color1, rgb_s color2, uint8_t blend_amount)
 {
-    float ratio = blend_amount/255;
-    int rdif = abs((color1.red + color2.red))    /2;
-    int gdif = abs((color1.green + color2.green))/2;
-    int bdif = abs((color1.blue + color2.blue))  /2;
+    float ratio = (float) blend_amount / 255.0;
+    int rdif = color1.red - color2.red;
+    int gdif = color1.green - color2.green;
+    int bdif = color1.blue - color2.blue;
+    
+    float rf = color1.red - (rdif * ratio);
+    float gf = color1.green - ( gdif * ratio);
+    float bf = color1.blue - ( bdif * ratio);
 
-    rdif = rdif * ratio;
-    gdif = gdif * ratio;
-    bdif = bdif * ratio;
-
-    rgb_s output = {
-        .red = color1.red + (uint8_t) rdif,
-        .green = color1.green + (uint8_t) gdif,
-        .blue = color1.blue + (uint8_t) bdif,
-    };
-
-    return output;
+    color_out->red = (uint8_t) rf;
+    color_out->green = (uint8_t) gf;
+    color_out->blue = (uint8_t) bf;
 }
 
 void rgb_setall(rgb_s color)
