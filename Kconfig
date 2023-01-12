@@ -1,0 +1,28 @@
+menu "NeoPixel Driver"
+    config NP_RGB_ENABLE
+        bool "Enable RGB (Neo Pixel) Driver"
+        default "y"
+
+    config NP_RGB_GPIO
+        depends on NP_RGB_ENABLE
+        int "RGB Driver GPIO Output Pin"
+        range 0 48
+        default 23
+        help
+            Default is 23
+    
+    config NP_GRB_ORDER
+        depends on NP_RGB_ENABLE
+        bool "Enable GRB order (Some NeoPixels require this)"
+        default "n"
+
+    config NP_RGB_COUNT
+        depends on NP_RGB_ENABLE
+        int "RGB LED Count"
+        range 1 32
+        default 4
+        help
+            This is used at compile time
+            to determine how many LEDs there
+            will be. 
+endmenu
