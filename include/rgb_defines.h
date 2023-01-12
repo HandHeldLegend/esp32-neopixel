@@ -56,8 +56,8 @@ typedef struct
 
 typedef enum
 {
-    NEOPIXEL_STATUS_AVAILABLE = 0,
-    NEOPIXEL_STATUS_DISABLED  = 1,
+    NEOPIXEL_STATUS_IDLE        = 0,
+    NEOPIXEL_STATUS_STARTED     = 1,
 } neopixel_status_t;
 
 typedef enum

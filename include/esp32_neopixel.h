@@ -35,8 +35,6 @@ esp_err_t neopixel_init(rgb_s *led_colors, spi_host_device_t spi_device);
 
 uint32_t rgb_from_hsv(uint8_t h, int8_t s, uint8_t v);
 
-// Public RGB color funtions
-
 // Set RGB LED global brightness (Needs rgb_show after to see updated value)
 void rgb_setbrightness(uint8_t brightness);
 

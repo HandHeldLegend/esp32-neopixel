@@ -10,7 +10,7 @@ rgb_s *_rgb_colors = NULL;
 uint8_t _rgb_brightness = 128;
 
 // Public vars
-neopixel_status_t neopixel_status = NEOPIXEL_STATUS_DISABLED;
+neopixel_status_t neopixel_status = NEOPIXEL_STATUS_IDLE;
 
 
 // Private functions
@@ -178,7 +178,7 @@ esp_err_t neopixel_init(rgb_s *led_colors, spi_host_device_t spi_device)
     //#if CONFIG_NP_RGB_ENABLE
     esp_err_t err; 
 
-    if (neopixel_status == NEOPIXEL_STATUS_AVAILABLE)
+    if (neopixel_status == NEOPIXEL_STATUS_STARTED)
     {
         ESP_LOGE(TAG, "Already initialized.");
         return ESP_FAIL;
@@ -214,7 +214,7 @@ esp_err_t neopixel_init(rgb_s *led_colors, spi_host_device_t spi_device)
     if (err != ESP_OK)
     {
         ESP_LOGE(TAG, "Failed to initialize SPI Bus.");
-        neopixel_status = NEOPIXEL_STATUS_DISABLED;
+        neopixel_status = NEOPIXEL_STATUS_IDLE;
         return ESP_FAIL;
     }
 
@@ -222,7 +222,7 @@ esp_err_t neopixel_init(rgb_s *led_colors, spi_host_device_t spi_device)
     if (err != ESP_OK)
     {
         ESP_LOGE(TAG, "Failed to add SPI Device.");
-        neopixel_status = NEOPIXEL_STATUS_DISABLED;
+        neopixel_status = NEOPIXEL_STATUS_IDLE;
         return ESP_FAIL;
     }
 
@@ -240,7 +240,7 @@ esp_err_t neopixel_init(rgb_s *led_colors, spi_host_device_t spi_device)
     #endif
 
     ESP_LOGI(TAG, "Started RGB Service OK.");
-    neopixel_status = NEOPIXEL_STATUS_AVAILABLE;
+    neopixel_status = NEOPIXEL_STATUS_STARTED;
     // Set current colors to the pointer referenced by user.
     _rgb_colors = led_colors;
 
@@ -370,7 +370,7 @@ void rgb_setall(rgb_s color)
 
 void rgb_show()
 {
-    if(neopixel_status != NEOPIXEL_STATUS_AVAILABLE)
+    if(neopixel_status != NEOPIXEL_STATUS_STARTED)
     {
         const char* TAG = "rgb_show";
         ESP_LOGE(TAG, "NeoPixel RGB Driver not initialized. Initialize before using this. (neopixel_init function)");
