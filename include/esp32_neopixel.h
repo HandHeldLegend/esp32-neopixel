@@ -8,6 +8,8 @@
 #include <assert.h>
 #include <stdint.h>
 
+#include "sdkconfig.h"
+
 #include "driver/spi_slave.h"
 #include "driver/spi_master.h"
 
@@ -18,8 +20,6 @@
 
 #include "rom/gpio.h"
 #include "soc/gpio_sig_map.h"
-
-#include "sdkconfig.h"
 
 // Public variables
 extern neopixel_status_t neopixel_status;
