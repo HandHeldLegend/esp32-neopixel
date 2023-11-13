@@ -3,19 +3,19 @@
 
 #include "rgb_defines.h"
 
-#define COLOR_BLACK     (rgb_s) {.rgb = 0x000000}
+#define NEO_COLOR_BLACK     (neo_rgb_s) {.rgb = 0x000000}
 
-#define COLOR_RED       (rgb_s) {.rgb = 0xFF0000}
-#define COLOR_ORANGE    (rgb_s) {.rgb = 0xFF8000}
-#define COLOR_YELLOW    (rgb_s) {.rgb = 0xFFFF00}
-#define COLOR_GREEN     (rgb_s) {.rgb = 0x00FF00}
-#define COLOR_TEAL      (rgb_s) {.rgb = 0x00FF80}
-#define COLOR_CYAN      (rgb_s) {.rgb = 0x00FFFF}
-#define COLOR_BLUE      (rgb_s) {.rgb = 0x0000FF}
-#define COLOR_VIOLET    (rgb_s) {.rgb = 0x8000FF}
-#define COLOR_PURPLE    (rgb_s) {.rgb = 0xFF00FF}
+#define NEO_COLOR_RED       (neo_rgb_s) {.rgb = 0xFF0000}
+#define NEO_COLOR_ORANGE    (neo_rgb_s) {.rgb = 0xFF8000}
+#define NEO_COLOR_YELLOW    (neo_rgb_s) {.rgb = 0xFFFF00}
+#define NEO_COLOR_GREEN     (neo_rgb_s) {.rgb = 0x00FF00}
+#define NEO_COLOR_TEAL      (neo_rgb_s) {.rgb = 0x00FF80}
+#define NEO_COLOR_CYAN      (neo_rgb_s) {.rgb = 0x00FFFF}
+#define NEO_COLOR_BLUE      (neo_rgb_s) {.rgb = 0x0000FF}
+#define NEO_COLOR_VIOLET    (neo_rgb_s) {.rgb = 0x8000FF}
+#define NEO_COLOR_PURPLE    (neo_rgb_s) {.rgb = 0xFF00FF}
 
-#define COLOR_PINK      (rgb_s) {.rgb = 0xFF5EDF}
-#define COLOR_WHITE     (rgb_s) {.rgb = 0xFFFFFF}
+#define NEO_COLOR_PINK      (neo_rgb_s) {.rgb = 0xFF5EDF}
+#define NEO_COLOR_WHITE     (neo_rgb_s) {.rgb = 0xFFFFFF}
 
 #endif

@@ -6,7 +6,7 @@
 spi_device_handle_t _rgb_spi = NULL;
 // The current SPI Host device
 spi_host_device_t _rgb_device;
-rgb_s *_rgb_colors = NULL;
+neo_rgb_s *_rgb_colors = NULL;
 uint8_t _rgb_brightness = 128;
 
 // Public vars
@@ -30,7 +30,7 @@ uint8_t _uint8_float_clamp(float in)
     return (uint8_t) tmp;
 }
 
-uint32_t _rgb_brightadjust(rgb_s color)
+uint32_t _rgb_brightadjust(neo_rgb_s color)
 {
     float b = _rgb_brightness;
     float ratio = b / 255.0f;
@@ -42,7 +42,7 @@ uint32_t _rgb_brightadjust(rgb_s color)
     new_g = new_g * ratio;
     new_b = new_b * ratio;
 
-    rgb_s new_color = {
+    neo_rgb_s new_color = {
         .red    = _uint8_float_clamp(new_r),
         .green  = _uint8_float_clamp(new_g),
         .blue   = _uint8_float_clamp(new_b),
@@ -61,7 +61,7 @@ void _rgb_create_packet(uint8_t *buffer)
     uint8_t buffer_idx = 0;
 
     // Create an empty color array matching the size of our real array an zero the values.
-    rgb_s adjusted_colors[CONFIG_NP_RGB_COUNT] = {0};
+    neo_rgb_s adjusted_colors[CONFIG_NP_RGB_COUNT] = {0};
 
     // Loop through each LED
     for (uint8_t s = 0; s < CONFIG_NP_RGB_COUNT; s++)
@@ -91,16 +91,18 @@ void _rgb_create_packet(uint8_t *buffer)
             uint8_t blue_bit = 0;
 
             // Account for GRB mode (From rightmost bit to left)
-            if (CONFIG_NP_GRB_ORDER)
-            {
-                red_bit     = (adjusted_colors[s].green  >> (b)) & 1;
-                green_bit   = (adjusted_colors[s].red    >> (b)) & 1;
-            }
-            else
+            #ifndef CONFIG_NP_GRB_ORDER
             {
                 red_bit     = (adjusted_colors[s].red    >> (b)) & 1;
                 green_bit   = (adjusted_colors[s].green  >> (b)) & 1;
             }
+            #else
+            {
+                red_bit     = (adjusted_colors[s].green  >> (b)) & 1;
+                green_bit   = (adjusted_colors[s].red    >> (b)) & 1;
+            }
+            #endif
+            
             
             blue_bit   =    (adjusted_colors[s].blue  >> (b)) & 1;
             
@@ -171,7 +173,7 @@ void _rgb_create_packet(uint8_t *buffer)
 }
 
 // Public functions
-esp_err_t neopixel_init(rgb_s *led_colors, spi_host_device_t spi_device)
+esp_err_t neopixel_init(neo_rgb_s *led_colors, spi_host_device_t spi_device)
 {
     const char* TAG = "neopixel_init";
 
@@ -264,7 +266,7 @@ uint32_t rgb_from_hsv(uint8_t h, int8_t s, uint8_t v)
     float hf = scale * 191;
     uint8_t hue = (uint8_t) hf;
 
-    rgb_s color_out = {
+    neo_rgb_s color_out = {
         .red = 0x00,
         .green = 0x00,
         .blue = 0x00,
@@ -332,7 +334,7 @@ void rgb_setbrightness(uint8_t brightness)
     _rgb_brightness = brightness;
 }
 
-void rgb_blend(rgb_s *color_out, rgb_s color1, rgb_s color2, uint8_t blend_amount)
+void rgb_blend(neo_rgb_s *color_out, neo_rgb_s color1, neo_rgb_s color2, uint8_t blend_amount)
 {
     float ratio = (float) blend_amount / 255.0;
     int rdif = color1.red - color2.red;
@@ -348,7 +350,7 @@ void rgb_blend(rgb_s *color_out, rgb_s color1, rgb_s color2, uint8_t blend_amoun
     color_out->blue = (uint8_t) bf;
 }
 
-void rgb_setall(rgb_s color)
+void rgb_setall(neo_rgb_s color)
 {
     const char* TAG = "rgb_setall";
     

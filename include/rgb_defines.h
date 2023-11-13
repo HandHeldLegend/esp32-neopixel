@@ -52,7 +52,7 @@ typedef struct
         uint32_t rgb;
     };
     
-} __attribute__ ((packed)) rgb_s;
+} __attribute__ ((packed)) neo_rgb_s;
 
 typedef enum
 {
