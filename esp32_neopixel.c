@@ -139,7 +139,7 @@ void _rgb_create_packet(uint8_t *buffer)
 
         // Once we've processed all 8 bits of the three colors, copy to our SPI buffer
         // On ESP32-S3 we have to invert the byte : )
-        #if CONFIG_IDF_TARGET_ESP32S3
+        /* #if CONFIG_IDF_TARGET_ESP32S3
             // Once we've processed all 8 bits of the three colors, copy to our SPI buffer
             buffer[buffer_idx]  = ~s_red.byte0;
             buffer[buffer_idx+1] = ~s_red.byte1;
@@ -152,7 +152,7 @@ void _rgb_create_packet(uint8_t *buffer)
             buffer[buffer_idx+6] = ~s_blue.byte0;
             buffer[buffer_idx+7] = ~s_blue.byte1;
             buffer[buffer_idx+8] = ~s_blue.byte2;
-        #else
+        #else */
             buffer[buffer_idx] = s_red.byte0;
             buffer[buffer_idx+1] = s_red.byte1;
             buffer[buffer_idx+2] = s_red.byte2;
@@ -164,7 +164,7 @@ void _rgb_create_packet(uint8_t *buffer)
             buffer[buffer_idx+6] = s_blue.byte0;
             buffer[buffer_idx+7] = s_blue.byte1;
             buffer[buffer_idx+8] = s_blue.byte2;
-        #endif
+        //#endif
 
         // Increase our buffer idx
         buffer_idx += 9;
@@ -236,7 +236,7 @@ esp_err_t neopixel_init(neo_rgb_s *led_colors, spi_host_device_t spi_device)
         }   
         else if (spi_device == SPI3_HOST)
         {
-            gpio_matrix_out(CONFIG_NP_RGB_GPIO, SPI3_D_OUT_IDX, true, false);
+            gpio_matrix_out(CONFIG_NP_RGB_GPIO, SPI3_D_OUT_IDX, false, false);
         }
 
     #endif
@@ -260,7 +260,7 @@ esp_err_t neopixel_init(neo_rgb_s *led_colors, spi_host_device_t spi_device)
  * @param s Saturation
  * @param v Value (Brightness)
 */
-uint32_t rgb_from_hsv(uint8_t h, int8_t s, uint8_t v)
+uint32_t neo_rgb_from_hsv(uint8_t h, int8_t s, uint8_t v)
 {
     float scale = (float) h /255;
     float hf = scale * 191;
@@ -329,12 +329,12 @@ uint32_t rgb_from_hsv(uint8_t h, int8_t s, uint8_t v)
     return color_out.rgb;
 }
 
-void rgb_setbrightness(uint8_t brightness)
+void neo_rgb_setbrightness(uint8_t brightness)
 {
     _rgb_brightness = brightness;
 }
 
-void rgb_blend(neo_rgb_s *color_out, neo_rgb_s color1, neo_rgb_s color2, uint8_t blend_amount)
+void neo_rgb_blend(neo_rgb_s *color_out, neo_rgb_s color1, neo_rgb_s color2, uint8_t blend_amount)
 {
     float ratio = (float) blend_amount / 255.0;
     int rdif = color1.red - color2.red;
@@ -350,7 +350,7 @@ void rgb_blend(neo_rgb_s *color_out, neo_rgb_s color1, neo_rgb_s color2, uint8_t
     color_out->blue = (uint8_t) bf;
 }
 
-void rgb_setall(neo_rgb_s color)
+void neo_rgb_setall(neo_rgb_s color)
 {
     const char* TAG = "rgb_setall";
     
@@ -366,7 +366,7 @@ void rgb_setall(neo_rgb_s color)
     }
 }
 
-void rgb_show()
+void neo_rgb_show()
 {
     if(neopixel_status != NEOPIXEL_STATUS_STARTED)
     {

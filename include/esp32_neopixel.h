@@ -27,24 +27,24 @@ extern neopixel_status_t neopixel_status;
 // Public functions
 
 // Initialize NeoPixel Driver
-esp_err_t neopixel_init(rgb_s *led_colors, spi_host_device_t spi_device);
+esp_err_t neopixel_init(neo_rgb_s *led_colors, spi_host_device_t spi_device);
 
 // Public CHSV color functions
 #define HSV_SECTION_6 (0x20)
 #define HSV_SECTION_3 (0x40)
 
-uint32_t rgb_from_hsv(uint8_t h, int8_t s, uint8_t v);
+uint32_t neo_rgb_from_hsv(uint8_t h, int8_t s, uint8_t v);
 
 // Set RGB LED global brightness (Needs rgb_show after to see updated value)
-void rgb_setbrightness(uint8_t brightness);
+void neo_rgb_setbrightness(uint8_t brightness);
 
 // Set all RGB LEDs to one color
-void rgb_setall(rgb_s color);
+void neo_rgb_setall(neo_rgb_s color);
 
 // Blends together two rgb_s colors and returns the blended color.
-void rgb_blend(rgb_s *color_out, rgb_s color1, rgb_s color2, uint8_t blend_amount);
+void neo_rgb_blend(neo_rgb_s *color_out, neo_rgb_s color1, neo_rgb_s color2, uint8_t blend_amount);
 
 // Update the RGB leds with the current set colors.
-void rgb_show(void);
+void neo_rgb_show(void);
 
 #endif
